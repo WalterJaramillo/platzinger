@@ -51,3 +51,13 @@ NgFor nos permite recorrer un arreglo de datos y por cada elemento generar o imp
 `<p *ngFor="let user of friends; let i = index">
  {{ i }}. {{ user.nick }} - {{ user.email }}
 </p>`
+
+### *ngIf
+
+NgIF es una directiva estructural de Angular que evalúa un valor o una expresión buleana, en función de la cual se mostrará o no, un elemento HTML. El elemento se mostrará sólo cuando la condición sea verdadera (true).
+
+`<ng-container *ngFor="let user of friends; let i = index">
+  <p *ngIf="user.friend" >
+    {{ i }}. {{ user.nick }} - {{ user.email }}
+  </p>
+</ng-container>`
