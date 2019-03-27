@@ -186,3 +186,20 @@ export class MiCustomPipe implements PipeTransform {
   }
 }
 ```
+
+### Estilos
+
+Se recomienda instalar los paquetes con versiones exactas para evitar incompatibilidades con versiones futuras de las librerías.
+
+`npm install bootstrap --save-exact`
+`npm install @fortawesome/fontawesome-free --save-exact`
+
+Luego de instalados los paquetes con npm, la implementación se hace importando las librerías en la sección styles del archivo angular.json
+
+...
+  ""styles"": [
+    ""node_modules/bootstrap/dist/css/bootstrap.css"",
+    ""node_modules/@fortawesome/fontawesome-free/css/all.css"",
+    ""src/styles.css""
+  ]
+...
