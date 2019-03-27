@@ -169,3 +169,20 @@ Wednesday 27/03/19
 ```
 
 Puedes consultar más formatos en la documentación oficial de [Angular - Pipes](https://angular.io/api/common/DatePipe).
+
+#### Pipes - Custom
+
+Para crear un pipe personalizado debemos crear un archivo de TypeScript e importar las clases Pipe y PipeTransform desde @angular/core.
+
+```
+import {Pipe, PipeTransform} from '@angular/core';
+
+@Pipe ({
+  name: 'nombre-del-pipe' // --- este es el nombre con que se implementa en el html
+})
+export class MiCustomPipe implements PipeTransform {
+  public transform ( value, args: string ) {
+     return <valor transformado>
+  }
+}
+```
