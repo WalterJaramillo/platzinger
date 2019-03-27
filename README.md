@@ -121,3 +121,51 @@ export class HomeComponent implements OnInit {
   ngOnInit() {}
 }
 ```
+
+### Pipes
+
+Los pipes en angular, son elementos que se pueden incluir en el HTML y nos permiten aplicar transformaciones a los datos antes de mostrarlos.
+
+Algunos de los pipes más usados son:
+
+1. json
+2. number: ‘<formato-decimal>’
+3. date: ‘<formato de fecha>’
+
+```
+<p>
+  {{ friend | json }}
+</p>
+<p>
+  {{ price | number: '1.2-2' }}
+</p>
+<p>
+  {{ today | date: 'short' }}
+</p>
+<p>
+  {{ today | date: 'medium' }}
+</p>
+<p>
+  {{ today | date: 'full' }}
+</p>
+<p>
+  {{ today | date: 'EEEE dd/MM/yy' }}
+</p>
+```
+
+output:
+```
+{ "nick": "Eduardo", "subnick": "Mi mensaje personal", "status": "online", "age": 28, "email": "eduardo@platzi.com", "friend": true, "uid": 1 }
+
+78.23
+
+3/27/19, 1:43 PM
+
+Mar 27, 2019, 1:43:00 PM
+
+Wednesday, March 27, 2019 at 1:43:00 PM GMT-03:00
+
+Wednesday 27/03/19
+```
+
+Puedes consultar más formatos en la documentación oficial de [Angular - Pipes](https://angular.io/api/common/DatePipe).
