@@ -96,5 +96,28 @@ const appRoutes: Routes = [
 ];
 ```
 
+### Servicios
 
+Un servicio es una clase que puede ser inyectada en uno o varios componentes y que es muy útil para compartir datos o funciones entre éstos, evitando la duplicidad de código.
 
+Se crean a través del Angular CLI con el siguiente comando:
+
+`ng generate service <directorio>/<nombre del servicio>`
+Al ejecutar este comando se generan en nuestro proyecto los siguientes archivos:
+```
+/<directorio>
+  <nombre del servicio>.service.spec.ts
+  <nombre del servicio>.service.ts
+```
+Luego en el componente, inyectamos el Servicio de manera similar a cómo inyectamos el ActivatedRoute.
+
+```
+export class HomeComponent implements OnInit {
+  friends: User[];
+  constructor(private userService: UserService) { 
+    this.friends = userService.getFriends();
+  }
+  
+  ngOnInit() {}
+}
+```
