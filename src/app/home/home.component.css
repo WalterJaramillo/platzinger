@@ -22,3 +22,11 @@
     max-width: 100px;
 }
 
+.whiteContainerPadded {
+    padding: 15px;
+    background-color: #faffff;
+}
+
+.icon {
+    width: 30px;
+}
