@@ -223,3 +223,13 @@ Ejemplo:
     <router-outlet></router-outlet>
 </div>
 ```
+
+### Guards
+
+Los guards son scripts que implementan una estrategia de seguridad para accesos no autorizados a las deferentes rutas de nuestra aplicación. Se crean de manera similar a los servicios y componentes, con el siguiente comando de AngularCLI:
+
+```ng generate guard <directorio>/<nombre-del-guard>```
+
+Resultando en la creación de los archivos: <nombre-del-guard>.specs.guard.ts y <nombre-del-guard>.guard.ts
+
+El guard se basa en un atributo llamado canActivate que, dependiendo de una condición o expresión buleana, retornará verdadero o falso al constructor del componente en el que se haya inyectado para indicarle cuando deberá mostrar o no el contenido de dicho componente.
