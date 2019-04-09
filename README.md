@@ -233,3 +233,11 @@ Los guards son scripts que implementan una estrategia de seguridad para accesos 
 Resultando en la creación de los archivos: <nombre-del-guard>.specs.guard.ts y <nombre-del-guard>.guard.ts
 
 El guard se basa en un atributo llamado canActivate que, dependiendo de una condición o expresión buleana, retornará verdadero o falso al constructor del componente en el que se haya inyectado para indicarle cuando deberá mostrar o no el contenido de dicho componente.
+
+### Tiempo real - conversaciones
+
+Generalmente, en sistemas tradicionales, un cliente envía la información al servidor, donde va a quedar almacenada hasta que otro cliente haga una petición y descargue los datos actualizados a su entorno local. Esto debe hacerlo el cliente dos en intervalos frecuentes que pueden ir desde algunos minutos hasta un segundo o menos, lo que pudiera significar una sobre carga del servidor. Esto va a depender de la cantidad de clientes que realicen peticiones en simultáneo.
+
+Firebase por su parte, usa una estrategia de sockets para manejar las actualizaciones que suceden en su servicio de base de datos en tiempo real. Esto significa que una vez realizada la primera conexión entre la app y el servidor, queda abierto un canal de comunicación permanente entre el servidor y el cliente, y al haber alguna actualización en la base de datos, ésta es notificada al navegador en cuestión de milisegundos, sin necesidad de que éste haya hecho una petición explícitamente, ni sometiendo al servidor a atender peticiones recurrentes en intervalos específicos.
+
+En nuestra app sólo deberemos tener un método que esté subscrito a los cambios notificados por el servicio de base de datos de firebase a través de un Observable, para actualizar la información de nuestro componente.
