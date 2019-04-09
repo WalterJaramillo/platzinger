@@ -10,17 +10,30 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  user: User;
   friends: User[];
   query: string = '';
   constructor(
     private userService: UserService,
     private authenticationService: AuthenticationService,
     private router: Router) { 
-    this.userService.getUsers().valueChanges().subscribe((data: User[])=> {
-      this.friends = data;
-    }, (err)=> {
-      console.log(err);
-    })
+
+      this.authenticationService.getStatus().subscribe((status)=> {
+        this.userService.getUserById(status.uid).valueChanges().subscribe((data: User)=> {
+          this.user = data;
+        }, (err)=> {
+          console.log(err);
+        })
+      }, (err)=> {
+        console.log(err);
+      });
+
+
+      this.userService.getUsers().valueChanges().subscribe((data: User[])=> {
+        this.friends = data;
+      }, (err)=> {
+        console.log(err);
+      });
   }
   
 
