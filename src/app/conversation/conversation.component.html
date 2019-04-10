@@ -1,4 +1,4 @@
-<div id="conversationContainer">
+<div id="conversationContainer" [ngClass]="{'shaker': shake}">
     <div class="container pato45">
       <div class="d-flex flew-row">
         <div class="col-md-3 d-flex flex-column">
@@ -18,14 +18,9 @@
             <hr />
             <div>
               <div *ngFor="let m of conversation">
-                {{ getUserById(m.sender) }} dice: <br />
-                <span>{{ m.text }}</span>
-              </div>
-              <div class="d-flex align-items-start flex-column">
-                  <img src="assets/img/generic_avatar.png" class="avatarUser img-fluid" alt="Avatar"><span class="speech-bubble">Hola! Como estas?</span>
-              </div> 
-              <div class="d-flex align-items-end flex-column">
-                  <img src="assets/img/generic_avatar.png" class="avatarUser img-fluid" alt="Avatar"><span class="speech-bubble-me">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam mauris eros, bibendum nec nulla semper, condimentum elementum ligula. Vivamus semper dictum diam, non viverra turpis. Proin rutrum, mi nec mollis ultricies, est lorem finibus tortor, sed dignissim mi est sed neque. Mauris non libero felis. Sed id lectus nisl. Phasellus laoreet, nibh at lobortis vestibulum, sem eros laoreet felis, sit amet consequat purus massa non ligula. Quisque quam quam, vehicula id enim a, fringilla mattis purus. Proin vulputate, risus a malesuada placerat, nulla tellus ultricies orci, vitae volutpat neque felis non urna. Nulla eu consectetur justo, et cursus tortor.</span>
+                <img src="{{ getUserById(m.sender).avatar }}" class="avatarUser img-fluid" alt="Avatar">
+                {{ getUserById(m.sender).nick }} dice: <br />
+               <span class="speech-bubble">{{ m.text }}</span>
               </div>
             </div>
             
@@ -44,7 +39,15 @@
             <textarea [(ngModel)]="textMessage" (keyup.enter)="sendMessage()" class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
           </div>
           <div class="chat-button d-flex justify-content-end align-items-center">
+            <div>
+              <label class="custom-file-upload"><input type="file" name="avatar" id="avatar">Mandar Imagen</label>
+            </div>
+            <div (click)="doZumbido()">
+              <img class="zumbido_img" src="assets/img/zumbido.png" alt="zumbido">
+            </div>
+            <div>
               <a class="btn btn-outline-primary">Enviar</a>
+            </div>
           </div>
         </div>
       </div>
