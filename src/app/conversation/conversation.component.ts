@@ -4,6 +4,8 @@ import { User } from '../interfaces/user';
 import { UserService } from '../services/user.service';
 import { ConversationService } from '../services/conversation.service';
 import { AuthenticationService } from '../services/authentication.service';
+import { AngularFireStorage } from '@angular/fire/storage';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-conversation',
@@ -18,11 +20,17 @@ export class ConversationComponent implements OnInit {
   textMessage: string;
   conversation: any[];
   shake: boolean = false;
+  public imagePath: any;
+  imageToUpload: any = '';
+  imagenes = new Array<any>();
+  urls = new Array<string>();
+  picture: any = '';
   constructor(
     private activatedRoute: ActivatedRoute,
     private userService: UserService,
     private conversationService: ConversationService,
-    private authenticationService: AuthenticationService) {
+    private authenticationService: AuthenticationService,
+    private firebaseStorage: AngularFireStorage) {
       this.friendId = this.activatedRoute.snapshot.params['uid'];
       
 
@@ -49,20 +57,26 @@ export class ConversationComponent implements OnInit {
   }
 
   sendMessage() {
-    const message = {
-      uid: this.conversation_id,
-      timestamp: Date.now(),
-      text: this.textMessage,
-      sender: this.user.uid,
-      receiver: this.friend.uid,
-      type: 'text'
+    if (this.textMessage !== '') {
+        const message = {
+          uid: this.conversation_id,
+          timestamp: Date.now(),
+          text: this.textMessage,
+          sender: this.user.uid,
+          receiver: this.friend.uid,
+          type: 'text'
+        }
+        this.conversationService.createConversation(message).then( (data)=> {
+          this.textMessage = '';
+          if (this.urls.length > 0) {
+            this.sendImage();
+          }
+        }).catch( (err)=> { 
+          console.log(err); 
+        });
+      }
+
     }
-    this.conversationService.createConversation(message).then( (data)=> {
-      this.textMessage = '';
-    }).catch( (err)=> { 
-      console.log(err); 
-    });
-  }
 
   sendZumbido() {
     const message = {
@@ -80,21 +94,39 @@ export class ConversationComponent implements OnInit {
     this.doZumbido();
   }
 
-
   sendImage() {
-    const message = {
-      uid: this.conversation_id,
-      timestamp: Date.now(),
-      text: this.textMessage,
-      sender: this.user.uid,
-      receiver: this.friend.uid,
-      type: 'text'
-    }
-    this.conversationService.createConversation(message).then( (data)=> {
-      this.textMessage = '';
-    }).catch( (err)=> { 
-      console.log(err); 
-    });
+    const currentPictureId = Date.now();
+    //console.log(this.imagenes[0]);
+    console.log(`ID: ${currentPictureId}`);
+   
+    const pictures = this.firebaseStorage.ref('pictures/' + currentPictureId + '.jpg').putString(this.imagenes[0], 'data_url');
+
+    pictures.then( (result)=> {
+      this.picture = this.firebaseStorage.ref('pictures/' + currentPictureId + '.jpg').getDownloadURL();
+      console.log(this.picture);
+      
+      this.picture.subscribe( (p) => {
+        
+        const message = {
+          uid: this.conversation_id,
+          timestamp: Date.now(),
+          text: p,
+          sender: this.user.uid,
+          receiver: this.friend.uid,
+          type: 'image'
+        }
+        
+        this.conversationService.createConversation(message).then( (data)=> {
+          this.textMessage = '';
+          this.urls = [];
+        }).catch( (err)=> { 
+          console.log(err); 
+        });
+      });
+    }).catch((err)=> {
+      console.log(err);
+    })
+
   }
 
   doZumbido() {
@@ -134,4 +166,24 @@ export class ConversationComponent implements OnInit {
       return this.user;
     }
   }
+
+  preview(event) {
+    this.urls = [];
+    let files = event.target.files;
+    
+    if (files) {
+      for (let file of files) {
+        
+        let reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.imagenes.push(reader.result);
+          this.urls.push(e.target.result);
+        }
+        reader.readAsDataURL(file);
+      }
+    }
+  }
+
+
+
 }

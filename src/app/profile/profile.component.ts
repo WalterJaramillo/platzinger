@@ -37,6 +37,7 @@ export class ProfileComponent implements OnInit {
 
     if (this.croppedImage) {
       const currentPictureId = Date.now();
+      console.log(this.croppedImage);
       const pictures = this.firebaseStorage.ref('pictures/' + currentPictureId + '.jpg').putString(this.croppedImage, 'data_url');
 
       pictures.then( (result) => {

@@ -20,7 +20,8 @@
               <div *ngFor="let m of conversation">
                 <img src="{{ getUserById(m.sender).avatar }}" class="avatarUser img-fluid" alt="Avatar">
                 {{ getUserById(m.sender).nick }} dice: <br />
-               <span class="speech-bubble">{{ m.text }}</span>
+               <span *ngIf="m.type==='text'" class="speech-bubble">{{ m.text }}</span>
+               <div *ngIf="m.type==='image'"><img src="{{m.text}}" width="400px"></div>
               </div>
             </div>
             
@@ -35,18 +36,26 @@
           </div>
         </div>
         <div class="col-md-9 d-flex flex-column" id="chat-col">
+          
           <div>
             <textarea [(ngModel)]="textMessage" (keyup.enter)="sendMessage()" class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
           </div>
           <div class="chat-button d-flex justify-content-end align-items-center">
             <div>
-              <label class="custom-file-upload"><input type="file" name="avatar" id="avatar">Mandar Imagen</label>
+                <img *ngIf="imageToUpload" [src]="imageToUpload" width="100px" alt="preview" style="border-radius: 5px;">
             </div>
+            <div>
+              <img *ngFor="let url of urls" [src]="url" width="100px" alt="preview" style="border-radius: 5px;">
+            </div>
+            <div>
+              <label class="custom-file-upload"><input type="file" multiple accept="image/*" name="images" id="images" (change)="preview($event)">Subir Imagen</label>
+            </div>
+
             <div (click)="doZumbido()">
               <img class="zumbido_img" src="assets/img/zumbido.png" alt="zumbido">
             </div>
             <div>
-              <a class="btn btn-outline-primary">Enviar</a>
+              <a class="btn btn-outline-primary" (click)="sendImage()">Enviar</a>
             </div>
           </div>
         </div>
