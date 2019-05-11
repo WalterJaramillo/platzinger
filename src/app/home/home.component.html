@@ -1,10 +1,10 @@
-<div id="homeContainer">
+<div id="homeContainer" *ngIf="user"> 
   <div class="whiteBorderGlassBox">
     <div class="homeHeadContainer">
       <div class="row">
         <div class="col-md-auto">
           <div class="avatarFrameOnline">
-            <img src="assets/img/generic_avatar.png" id="homeAvatarPicture" alt="" >
+            <img src="{{ user.avatar }}" id="homeAvatarPicture" alt="avatar" class="img-fluid" >
           </div>
         </div>
         <div class="col" *ngIf="user">
