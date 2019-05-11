@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DialogService, DialogComponent } from 'ng2-bootstrap-modal';
 import { UserService } from 'src/app/services/user.service';
 
@@ -15,7 +15,7 @@ export interface PromptModel {
   templateUrl: './request.component.html',
   styleUrls: ['./request.component.css']
 })
-export class RequestComponent extends DialogComponent<PromptModel, any> implements PromptModel  {
+export class RequestComponent extends DialogComponent<PromptModel, any> implements PromptModel, OnInit  {
 
   scope: any;
   currentRequest: any;
@@ -25,7 +25,7 @@ export class RequestComponent extends DialogComponent<PromptModel, any> implemen
               private userService: UserService,
               private requestsService: RequestsService) {
                 super(dialogService); 
-
+                
                }
 
   accept() {
@@ -54,5 +54,10 @@ export class RequestComponent extends DialogComponent<PromptModel, any> implemen
         console.log(err);
       })
     }
+  }
+
+  ngOnInit() {
+    console.log('CurrentREQUEST');
+    console.log(this.currentRequest);
   }
 }

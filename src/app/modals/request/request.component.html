@@ -6,20 +6,23 @@
     </div>
     <div class="modal-body" style="height: auto">
       <div class="row">
-        <div class="col-md-auto">
+        <div class="col-md-3">
           <img src="assets/img/generic_avatar.png" class="img-fluid">
         </div>
-        <div class="col-md">
-          <b>{{currentRequest.sender}}</b>
+        <div class="col-md-9">
+          <b>{{ currentRequest.sender }}</b>
           <small>Te ha enviado esta solicitud</small>
         </div>
         <hr />
-        <h4>Deseas agregar a estar persona?</h4>
-        <input type="radio" name="addtoMsn" [(ngModel)]="shouldAdd" value="yes" id="add-yes"> <label for="add-yes">Si quiero agregarlo</label> <br />
-
-        <input type="radio" name="addtoMsn" [(ngModel)]="shouldAdd" value="no" id="add-no"> <label for="add-no">No quiero agregarlo</label> <br />
-
-        <input type="radio" name="addtoMsn" [(ngModel)]="shouldAdd" value="later" id="add-later"> <label for="add-later">Después lo pienso</label> <br />
+        <div class="col-md-12">
+          <h4>Deseas agregar a estar persona?</h4>
+          <br />
+          <input type="radio" name="addtoMsn" [(ngModel)]="shouldAdd" value="yes" id="add-yes"> <label for="add-yes">Si quiero agregarlo</label> <br />
+  
+          <input type="radio" name="addtoMsn" [(ngModel)]="shouldAdd" value="no" id="add-no"> <label for="add-no">No quiero agregarlo</label> <br />
+  
+          <input type="radio" name="addtoMsn" [(ngModel)]="shouldAdd" value="later" id="add-later"> <label for="add-later">Después lo pienso</label> <br />
+        </div>
       </div>
     </div>
 
