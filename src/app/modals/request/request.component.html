@@ -1,4 +1,4 @@
-<div class="modal-dialog modal-lg">
+<div class="modal-dialog modal-lg" *ngIf="friendUser">
   <div class="modal-content">
     <div class="modal-header">
       Nueva Solicitud
@@ -7,10 +7,10 @@
     <div class="modal-body" style="height: auto">
       <div class="row">
         <div class="col-md-3">
-          <img src="assets/img/generic_avatar.png" class="img-fluid">
+          <img src="{{ friendUser.avatar }}" class="img-fluid">
         </div>
         <div class="col-md-9">
-          <b>{{ currentRequest.sender }}</b>
+          <b>{{ friendUser.nick }} ({{ friendUser.email}})</b>
           <small>Te ha enviado esta solicitud</small>
         </div>
         <hr />
