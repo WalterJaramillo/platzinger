@@ -241,3 +241,61 @@ Generalmente, en sistemas tradicionales, un cliente envía la información al se
 Firebase por su parte, usa una estrategia de sockets para manejar las actualizaciones que suceden en su servicio de base de datos en tiempo real. Esto significa que una vez realizada la primera conexión entre la app y el servidor, queda abierto un canal de comunicación permanente entre el servidor y el cliente, y al haber alguna actualización en la base de datos, ésta es notificada al navegador en cuestión de milisegundos, sin necesidad de que éste haya hecho una petición explícitamente, ni sometiendo al servidor a atender peticiones recurrentes en intervalos específicos.
 
 En nuestra app sólo deberemos tener un método que esté subscrito a los cambios notificados por el servicio de base de datos de firebase a través de un Observable, para actualizar la información de nuestro componente.
+
+## Componentes anidados
+
+Los componentes en Angular, pueden contener internamente a otros componentes. A éstos se les denomina componentes anidados.
+
+Para poder utilizar información proveniente de un componente externo en uno anidado, es necesario incluir en este último el decorador @Input. Al incluir el nuevo componente en el html del componente padre, deberá pasarse, a través de un atributo colocado entre corchetes “”[ ]"", el valor indicado en el decorador @Input.
+
+En el componente padre:
+
+```
+<div *ngIf="user && user.friends">
+  <div class="disblo marbo5">      
+    <app-contact class="col-md-12" *ngFor="let user of user.friends" [uid]="user"></app-contact>
+  </div>
+</div>
+```
+
+El componente hijo en su .ts:
+
+```
+import { Component, OnInit, Input } from '@angular/core';
+import { UserService } from '../services/user.service';
+import { User } from 'firebase';
+
+@Component({
+  selector: 'app-contact',
+  templateUrl: './contact.component.html',
+  styleUrls: ['./contact.component.css']
+})
+export class ContactComponent implements OnInit {
+
+  //para recibir datos de un componente padre
+@Input() uid: string;
+contact: User;
+
+  constructor(
+    private userService: UserService
+  ) { }
+
+  ngOnInit() {
+    console.log(this.uid);
+    this.userService.getUserById(this.uid).valueChanges().subscribe( (data: User)=> {
+      this.contact = data;
+    });
+  }
+
+}
+```
+
+En su .html:
+
+```
+<div *ngIf="contact" routerLink="/conversation/{{contact.uid}}">
+  <img src="./assets/img/logo_live_{{contact.status}}.png"  class="icon" alt="{{contact.status}}" />
+  <b>{{ contact.nick }}</b> - {{ contact.subnick || 'No subnick' }}
+  <small>{{ contact.email }}</small> 
+</div>
+```
