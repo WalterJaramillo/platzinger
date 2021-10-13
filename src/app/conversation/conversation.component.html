@@ -24,7 +24,7 @@
                <div *ngIf="m.type==='image'"><img src="{{m.text}}" width="400px"></div>
               </div>
             </div>
-            
+
           </div>
         </div>
     </div>
@@ -36,7 +36,7 @@
           </div>
         </div>
         <div class="col-md-9 d-flex flex-column" id="chat-col">
-          
+
           <div>
             <textarea [(ngModel)]="textMessage" (keyup.enter)="sendMessage()" class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
           </div>
